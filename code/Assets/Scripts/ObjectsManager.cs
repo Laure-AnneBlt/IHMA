@@ -6,10 +6,17 @@ public class DistributeInLine : MonoBehaviour
     public GameObject[] prefabs;     
     public float spacing = 0.3f;     // Distance between each object
     public Transform table;
-    public QRCodeReader qrReader = new QRCodeReader();
+    public QRCodeReader qrReader;
     public GameObject qrCodeObject;
 
     private List<GameObject> objects = new List<GameObject>();   // To hold the 12 objects instantiated from the prefab
+
+
+    void Awake()
+    {
+        // Ajout du composant QRCodeReader au GameObject courant
+        qrReader = gameObject.AddComponent<QRCodeReader>();
+    }
 
     void Start()
     {
@@ -37,6 +44,9 @@ public class DistributeInLine : MonoBehaviour
             }
         }
 
+        // Detect click on the computer and change block color
+        DetectAndColorBlock();
+
         // Stop QR code tracking when it is detected by the Hololens
         if (qrReader.init)
         {
@@ -63,5 +73,57 @@ public class DistributeInLine : MonoBehaviour
         float distanceToTable = Vector3.Distance(obj.transform.position, projectedPosition);
 
         return distanceToTable <= 0.07;
+    }
+
+    private void DetectAndColorBlock()
+    {
+        // Check for mouse click
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            // Detect the object being clicked
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+
+                // Check if the clicked object is part of the objects list
+                if (objects.Contains(clickedObject))
+                {
+                    ChangeObjectColor(clickedObject, Color.red);
+                }
+            }
+        }
+    }
+
+/*    private void ChangeBlockColor(GameObject obj, Color color)
+    {
+        // Change the color of the object's material
+        Renderer renderer = obj.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = color;
+        }
+    }*/
+
+    private void ChangeObjectColor(GameObject rootObject, Color color)
+    {
+        // Change the color of the root object itself
+        Renderer rootRenderer = rootObject.GetComponent<Renderer>();
+        if (rootRenderer != null)
+        {
+            rootRenderer.material.color = color;
+        }
+
+        // Iterate over all children of the root object and change their colors
+        foreach (Transform child in rootObject.transform)
+        {
+            Renderer childRenderer = child.GetComponent<Renderer>();
+            if (childRenderer != null)
+            {
+                childRenderer.material.color = color;
+            }
+        }
     }
 }

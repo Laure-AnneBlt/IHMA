@@ -25,10 +25,12 @@ public class DistributeInLine : MonoBehaviour
             // First set of objects
             Vector3 newPosition = table.position + new Vector3(-table.localScale.x / 2, 0.4f, table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject = Instantiate(prefabs[i], newPosition, Quaternion.identity);
+            newObject.AddComponent<Draggable>();
             objects.Add(newObject);
             // Second set of objects
             Vector3 newPosition2 = table.position + new Vector3(-table.localScale.x / 2, 0.4f, -table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject2 = Instantiate(prefabs[i], newPosition2, Quaternion.Euler(0, 90, 0));
+            newObject2.AddComponent<Draggable>();
             objects.Add(newObject2);
 
         }
@@ -124,6 +126,45 @@ public class DistributeInLine : MonoBehaviour
             {
                 childRenderer.material.color = color;
             }
+        }
+    }
+}
+
+using UnityEngine;
+
+public class DragObject : MonoBehaviour
+{
+    private Vector3 offset;
+    private float zCoord;
+
+    void OnMouseDown()
+    {
+        zCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+        offset = gameObject.transform.position - GetMouseWorldPos();
+    }
+
+    void OnMouseDrag()
+    {
+        transform.position = GetMouseWorldPos() + offset;
+    }
+
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 mousePoint = Input.mousePosition;
+        mousePoint.z = zCoord;
+        return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButton(1)) // Right mouse button for rotation
+        {
+            float rotationSpeed = 10.0f;
+            float rotationX = Input.GetAxis("Mouse X") * rotationSpeed;
+            float rotationY = Input.GetAxis("Mouse Y") * rotationSpeed;
+
+            transform.Rotate(Vector3.up, -rotationX, Space.World);
+            transform.Rotate(Vector3.right, rotationY, Space.World);
         }
     }
 }

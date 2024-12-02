@@ -10,6 +10,7 @@ public class DistributeInLine : MonoBehaviour
     public GameObject qrCodeObject;
 
     private List<GameObject> objects = new List<GameObject>();   // To hold the 12 objects instantiated from the prefab
+    private Dictionary<GameObject, bool> objectStates = new Dictionary<GameObject, bool>(); // Track selection state for each object
 
 
     void Awake()
@@ -26,10 +27,14 @@ public class DistributeInLine : MonoBehaviour
             Vector3 newPosition = table.position + new Vector3(-table.localScale.x / 2, 0.4f, table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject = Instantiate(prefabs[i], newPosition, Quaternion.identity);
             objects.Add(newObject);
+            objectStates[newObject] = false; // Initially not selected
+
             // Second set of objects
             Vector3 newPosition2 = table.position + new Vector3(-table.localScale.x / 2, 0.4f, -table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject2 = Instantiate(prefabs[i], newPosition2, Quaternion.Euler(0, 90, 0));
             objects.Add(newObject2);
+            objectStates[newObject2] = false; // Initially not selected
+
 
         }
     }
@@ -91,7 +96,19 @@ public class DistributeInLine : MonoBehaviour
                 // Check if the clicked object is part of the objects list
                 if (objects.Contains(clickedObject))
                 {
-                    ChangeObjectColor(clickedObject, Color.red);
+                    bool isSelected = objectStates[clickedObject];
+
+                    if (isSelected)
+                    {
+                        ChangeObjectColor(clickedObject, Color.white);
+                    }
+                    else
+                    {
+                        ChangeObjectColor(clickedObject, Color.red);
+                    }
+
+                    objectStates[clickedObject] = !isSelected;
+
                 }
             }
         }

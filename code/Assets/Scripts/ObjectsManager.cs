@@ -26,14 +26,14 @@ public class DistributeInLine : MonoBehaviour
             // First set of objects
             Vector3 newPosition = table.position + new Vector3(-table.localScale.x / 2, 0.4f, table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject = Instantiate(prefabs[i], newPosition, Quaternion.identity);
-            newObject.AddComponent<Draggable>();
+            newObject.AddComponent<DragObject>();
             objects.Add(newObject);
             objectStates[newObject] = false; // Initially not selected
 
             // Second set of objects
             Vector3 newPosition2 = table.position + new Vector3(-table.localScale.x / 2, 0.4f, -table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject2 = Instantiate(prefabs[i], newPosition2, Quaternion.Euler(0, 90, 0));
-            newObject2.AddComponent<Draggable>();
+            newObject2.AddComponent<DragObject>();
             objects.Add(newObject2);
             objectStates[newObject2] = false; // Initially not selected
 
@@ -146,8 +146,6 @@ public class DistributeInLine : MonoBehaviour
         }
     }
 }
-
-using UnityEngine;
 
 public class DragObject : MonoBehaviour
 {

@@ -280,6 +280,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3619542596533218170, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1256700356}
+    - targetCorrespondingSourceObject: {fileID: 3619542596533218170, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1256700359}
+    - targetCorrespondingSourceObject: {fileID: 3619542596533218170, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1256700360}
   m_SourcePrefab: {fileID: 100100000, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
 --- !u!4 &749349236 stripped
 Transform:
@@ -405,6 +411,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 1, z: 0.99999994}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1256700359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256700351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6560efb5e2b124982a71d641ec93e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1256700360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256700351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6560efb5e2b124982a71d641ec93e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1482350379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -502,6 +532,11 @@ MonoBehaviour:
   table: {fileID: 749349236}
   qrReader: {fileID: 2130387832}
   qrCodeObject: {fileID: 2130387831}
+  gridRows: 5
+  gridCols: 5
+  cellSize: 0.5
+  gridColor: {r: 0, g: 0, b: 0, a: 1}
+  selectedCellColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!4 &1574875130
 Transform:
   m_ObjectHideFlags: 0

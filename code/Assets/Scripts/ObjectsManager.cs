@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,7 +10,10 @@ using UnityEngine.UIElements;
 enum BlockColor { NEUTRAL, RED, BLUE, DONE };
 
 public class DistributeInLine : MonoBehaviour
+
 {
+    public static DistributeInLine Instance { get; private set; }
+
     public GameObject[] prefabs;
     public GameObject casePrefab;
     public float spacing = 0.3f;     // Distance between each object
@@ -25,12 +29,16 @@ public class DistributeInLine : MonoBehaviour
     private int m = 13;
     private GameObject[,] caseObject;
 
-    
+    public static List<GameObject> GetObjects()
+    {
+        return Instance.objects; // Retourne la liste des objets
+    }
 
     void Awake()
     {
         // Ajout du composant QRCodeReader au GameObject courant
         qrReader = gameObject.AddComponent<QRCodeReader>();
+        Instance = this;
     }
 
     private void CheckColliders(GameObject obj)
@@ -235,23 +243,47 @@ public class DistributeInLine : MonoBehaviour
     }
 }
 
-
-
 public class DragObject : MonoBehaviour
 {
     private Vector3 offset;
     private float zCoord;
     private GameObject rootObject;
 
-    void OnMouseDown()
+    void Update()
     {
-        rootObject = transform.root.gameObject;
+        if (Input.GetMouseButtonDown(0)) // Clic gauche
+        {
+            HandleMouseDown();
+        }
 
-        zCoord = Camera.main.WorldToScreenPoint(rootObject.transform.position).z;
-        offset = rootObject.transform.position - GetMouseWorldPos();
+        if (Input.GetMouseButton(0) && rootObject != null) // Maintenir clic gauche
+        {
+            HandleMouseDrag();
+        }
     }
 
-    void OnMouseDrag()
+    private void HandleMouseDown()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject clickedObject = hit.collider.gameObject;
+            rootObject = clickedObject.transform.root.gameObject;
+
+            Debug.Log($"Clicked on: {clickedObject.name}, Root: {rootObject.name}");
+
+            List<GameObject> objects = DistributeInLine.GetObjects();
+            if (objects.Contains(rootObject))
+            {
+                zCoord = Camera.main.WorldToScreenPoint(rootObject.transform.position).z;
+                offset = rootObject.transform.position - GetMouseWorldPos();
+            }
+        }
+    }
+
+    private void HandleMouseDrag()
     {
         if (rootObject != null)
         {
@@ -265,20 +297,5 @@ public class DragObject : MonoBehaviour
         mousePoint.z = zCoord;
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
-
-    void Update()
-    {
-        if (Input.GetMouseButton(1)) // Right mouse button for rotation
-        {
-            if (rootObject != null)
-            {
-                float rotationSpeed = 10.0f;
-                float rotationX = Input.GetAxis("Mouse X") * rotationSpeed;
-                float rotationY = Input.GetAxis("Mouse Y") * rotationSpeed;
-
-                rootObject.transform.Rotate(Vector3.up, -rotationX, Space.World);
-                rootObject.transform.Rotate(Vector3.right, rotationY, Space.World);
-            }
-        }
-    }
 }
+

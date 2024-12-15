@@ -21,8 +21,8 @@ public class DistributeInLine : MonoBehaviour
     private List<GameObject> objects = new List<GameObject>();   // To hold the 12 objects instantiated from the prefab
     private Dictionary<GameObject, BlockColor> objectStates = new Dictionary<GameObject, BlockColor>(); // Track selection state for each object
 
-    private int n = 10;
-    private int m = 10;
+    private int n = 13;
+    private int m = 13;
     private GameObject[,] caseObject;
 
     
@@ -140,9 +140,9 @@ public class DistributeInLine : MonoBehaviour
             for (int j = 1; j < m; j++)
             {
                 caseObject[i-1, j-1].transform.position = new Vector3(
-                    bottomLeftCorner.x + i * 0.1f,
+                    bottomLeftCorner.x + (i * 0.1f) - 0.05f,
                     table.position.y + 0.01f,
-                    bottomLeftCorner.z + j * 0.1f
+                    bottomLeftCorner.z + (j * 0.1f) - 0.05f
                 );
             }
         }

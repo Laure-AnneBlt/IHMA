@@ -137,11 +137,7 @@ PlayerSettings:
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
   bundleVersion: 0.1
-  preloadedAssets:
-  - {fileID: 11400000, guid: c677e5c4eb85b7849a8da406775c299d, type: 2}
-  - {fileID: -450553439670030918, guid: e8da8a2d6152e4840aea4b285357173c, type: 2}
-  - {fileID: 11400000, guid: 6123f612fbb2e444ca651fd1a9407cdb, type: 2}
-  - {fileID: -8004832516041701625, guid: cfb97062e08c71740bc7316aa783fe9d, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -162,6 +158,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: com.DefaultCompany.projetCollecticiel
     Standalone: com.DefaultCompany.projetCollecticiel
   buildNumber:
     Standalone: 0
@@ -429,7 +426,7 @@ PlayerSettings:
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 150000000b000000
-    m_Automatic: 1
+    m_Automatic: 0
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
     m_Automatic: 1

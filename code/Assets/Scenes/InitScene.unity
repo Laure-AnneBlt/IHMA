@@ -304,6 +304,50 @@ PrefabInstance:
       propertyPath: m_ClearFlags
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_IgnoreTrackingState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_PositionInput.m_UseReference
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_RotationInput.m_UseReference
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_PositionInput.m_Action.m_SingletonActionBindings.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_RotationInput.m_Action.m_SingletonActionBindings.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_PositionInput.m_Action.m_SingletonActionBindings.Array.data[2].m_Id
+      value: 8c6f5840-1ea3-4429-8b8b-2a0ba8e473ac
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_RotationInput.m_Action.m_SingletonActionBindings.Array.data[2].m_Id
+      value: 1b4a1d33-7d00-43e5-a58c-08cc50463539
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_PositionInput.m_Action.m_SingletonActionBindings.Array.data[2].m_Path
+      value: <HandheldARInputDevice>/devicePosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_RotationInput.m_Action.m_SingletonActionBindings.Array.data[2].m_Path
+      value: <HandheldARInputDevice>/deviceRotation
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_PositionInput.m_Action.m_SingletonActionBindings.Array.data[2].m_Action
+      value: Main Camera - TPD - Position
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351505566771328561, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_RotationInput.m_Action.m_SingletonActionBindings.Array.data[2].m_Action
+      value: Main Camera - TPD - Rotation
+      objectReference: {fileID: 0}
     - target: {fileID: 2351505566903569412, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -638,8 +682,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 705507995}
-  - {fileID: 773469839}
   - {fileID: 1482350379}
   - {fileID: 749349235}
   - {fileID: 1574875130}
   - {fileID: 2130387835}
+  - {fileID: 773469839}

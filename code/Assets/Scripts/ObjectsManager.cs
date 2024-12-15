@@ -1,25 +1,29 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UIElements;
+
+enum BlockColor { NEUTRAL, RED, BLUE, DONE };
 
 public class DistributeInLine : MonoBehaviour
 {
     public GameObject[] prefabs;
+    public GameObject casePrefab;
     public float spacing = 0.3f;     // Distance between each object
     public Transform table;
     public QRCodeReader qrReader;
     public GameObject qrCodeObject;
-
-    public int gridRows = 5;       // Nombre de lignes du quadrillage
-    public int gridCols = 5;       // Nombre de colonnes du quadrillage
-    public float cellSize = 0.5f;  // Taille d'une cellule (en unités Unity)
-    public Color gridColor = Color.black; // Couleur du quadrillage
-    public Color selectedCellColor = Color.green; // Couleur d'une case sélectionnée
-
-    enum BlockColor { NEUTRAL, RED, BLUE };
+   
 
     private List<GameObject> objects = new List<GameObject>();   // To hold the 12 objects instantiated from the prefab
     private Dictionary<GameObject, BlockColor> objectStates = new Dictionary<GameObject, BlockColor>(); // Track selection state for each object
-    private Dictionary<Vector2Int, GameObject> gridCells = new Dictionary<Vector2Int, GameObject>(); // Pour stocker les cases
+
+    private int n = 10;
+    private int m = 10;
+    private GameObject[,] caseObject;
 
     
 
@@ -44,9 +48,36 @@ public class DistributeInLine : MonoBehaviour
         }
     }
 
+
+
     void Start()
     {
-        DrawGrid(); // Initialiser le quadrillage
+        caseObject = new GameObject[n, m];
+
+
+
+        /*float CubeLength = 0.05f;*/
+
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                /*Vector3 bottomLeftCorner = table.position - new Vector3(table.localScale.x / 2, 0, table.localScale.z / 2);*/
+
+                Vector3 newPos = new Vector3(0, 0, 0);
+                GameObject caseElement = Instantiate(casePrefab, newPos, Quaternion.identity);
+                caseObject[i, j] = caseElement;
+
+                objects.Add(caseElement);
+                objectStates[caseElement] = BlockColor.NEUTRAL;
+                
+            }
+        }
+
+        
+
+
 
         for (int i = 0; i < prefabs.Length; i++)
         {
@@ -72,6 +103,7 @@ public class DistributeInLine : MonoBehaviour
 
     void Update()
     {
+
         foreach (GameObject obj in objects)
         {
             if (IsCloseToTable(obj))
@@ -81,60 +113,44 @@ public class DistributeInLine : MonoBehaviour
         }
 
         DetectAndColorBlock();
-        DetectAndColorCell(); // Gérer la sélection des cases
+        // DetectAndColorCell(); // Gérer la sélection des cases
 
         if (qrReader.init)
         {
             qrCodeObject.SetActive(false);
         }
-    }
 
-    private void DrawGrid()
-    {
-        for (int row = 0; row < gridRows; row++)
+
+        /*for (int i = 0; i < n; i++)
         {
-            for (int col = 0; col < gridCols; col++)
+            for (int j = 0; j < m; j++)
             {
-                Vector3 cellPosition = table.position + new Vector3(-table.localScale.x / 2 + (col + 0.5f) * cellSize, 0.01f, -table.localScale.z / 2 + (row + 0.5f) * cellSize);
+                //caseObject[i, j].transform.position = new Vector3(i*0.1f , table.position.y + 0.01f, j * 0.1f);
+                Vector3 bottomLeftCorner = table.position - new Vector3(table.localScale.x / 2, 0, table.localScale.z / 2);
+                Vector3 newPos = new Vector3(bottomLeftCorner.x + i * CubeLength, table.position.y + 0.01f, (-table.position.z / 2) + j * CubeLength);
+                caseObject[i, j].transform.position = newPos;
+                    // new Vector3( +i*0.1f, table.position.y + 0.01f, (-table.position.z/2) + j * 0.1f);
+            }
+        }*/
 
-                GameObject cell = GameObject.CreatePrimitive(PrimitiveType.Quad); // Crée une cellule
-                cell.transform.position = cellPosition;
-                cell.transform.localScale = new Vector3(cellSize, 1, cellSize);
-                cell.transform.rotation = Quaternion.Euler(90, 0, 0); // Rotation pour que le Quad soit horizontal
-                cell.GetComponent<Renderer>().material.color = gridColor;
+        Vector3 bottomLeftCorner = table.position - new Vector3(table.localScale.x / 2, 0, table.localScale.z / 2);
 
-                // Désactive les colliders des cellules
-                Destroy(cell.GetComponent<Collider>());
-
-                // Ajoute au dictionnaire avec sa position
-                gridCells[new Vector2Int(row, col)] = cell;
-
-                // Parentage à la table pour organisation
-                cell.transform.SetParent(table);
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 1; j < m; j++)
+            {
+                caseObject[i-1, j-1].transform.position = new Vector3(
+                    bottomLeftCorner.x + i * 0.1f,
+                    table.position.y + 0.01f,
+                    bottomLeftCorner.z + j * 0.1f
+                );
             }
         }
+
+
     }
 
-    private void DetectAndColorCell()
-    {
-        if (Input.GetMouseButtonDown(0)) // Clic gauche
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                foreach (var cell in gridCells)
-                {
-                    if (hit.collider.gameObject == cell.Value)
-                    {
-                        // Colorie la cellule sélectionnée
-                        cell.Value.GetComponent<Renderer>().material.color = selectedCellColor;
-                    }
-                }
-            }
-        }
-    }
 
     private void SnapToSurface(GameObject obj)
     {
@@ -183,9 +199,14 @@ public class DistributeInLine : MonoBehaviour
                             objectStates[rootObject] = BlockColor.BLUE;
                             break;
                         case BlockColor.BLUE:
+                            ChangeObjectColor(rootObject, Color.green);
+                            objectStates[rootObject] = BlockColor.DONE;
+                            break;
+                        case BlockColor.DONE:
                             ChangeObjectColor(rootObject, Color.white);
                             objectStates[rootObject] = BlockColor.NEUTRAL;
                             break;
+
                     }
                    
 
@@ -213,6 +234,8 @@ public class DistributeInLine : MonoBehaviour
         }
     }
 }
+
+
 
 public class DragObject : MonoBehaviour
 {

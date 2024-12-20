@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 
@@ -28,6 +29,13 @@ public class DistributeInLine : MonoBehaviour
     private int n = 13;
     private int m = 13;
     private GameObject[,] caseObject;
+
+/*    // Smartphone
+    [SerializeField]
+    private InputActionReference tapReference;
+
+*/
+
 
     public static List<GameObject> GetObjects()
     {
@@ -60,6 +68,7 @@ public class DistributeInLine : MonoBehaviour
 
     void Start()
     {
+/*        tapReference.action.performed += ctx => InitialLocationComplete();*/
         caseObject = new GameObject[n, m];
 
 
@@ -90,7 +99,7 @@ public class DistributeInLine : MonoBehaviour
         for (int i = 0; i < prefabs.Length; i++)
         {
             // First set of objects
-            Vector3 newPosition = table.position + new Vector3(-table.localScale.x / 2, 0.4f, table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
+            Vector3 newPosition = table.position + new Vector3(-table.localScale.x / 2, 0.01f, table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject = Instantiate(prefabs[i], newPosition, Quaternion.identity);
             newObject.AddComponent<DragObject>();
             objects.Add(newObject);
@@ -99,7 +108,7 @@ public class DistributeInLine : MonoBehaviour
             CheckColliders(newObject);
 
             // Second set of objects
-            Vector3 newPosition2 = table.position + new Vector3(-table.localScale.x / 2, 0.4f, -table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
+            Vector3 newPosition2 = table.position + new Vector3(-table.localScale.x / 2, 0.01f, -table.localScale.z / 2) + new Vector3(i * spacing, 0, 0);
             GameObject newObject2 = Instantiate(prefabs[i], newPosition2, Quaternion.Euler(0, 90, 0));
             newObject2.AddComponent<DragObject>();
             objects.Add(newObject2);
@@ -248,6 +257,8 @@ public class DragObject : MonoBehaviour
     private Vector3 offset;
     private float zCoord;
     private GameObject rootObject;
+
+
 
     void Update()
     {

@@ -1,0 +1,34 @@
+{
+    "name": "TouchInputActions",
+    "maps": [
+        {
+            "name": "TouchInput",
+            "id": "a4ad292b-147e-440b-9a9e-0b605fa2cb59",
+            "actions": [
+                {
+                    "name": "TouchAction",
+                    "type": "Value",
+                    "id": "4525b12a-96d1-4062-8446-66166e851d7e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "63c3ce76-d1a3-41df-bd37-f1382fdc6b80",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

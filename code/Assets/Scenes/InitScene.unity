@@ -235,15 +235,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3619542596533218171, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.196
       objectReference: {fileID: 0}
     - target: {fileID: 3619542596533218171, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 0.475
       objectReference: {fileID: 0}
     - target: {fileID: 3619542596533218171, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.195
       objectReference: {fileID: 0}
     - target: {fileID: 3619542596533218171, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
       propertyPath: m_LocalRotation.w
@@ -424,11 +424,79 @@ PrefabInstance:
       propertyPath: m_Name
       value: MRTK XR Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 4160709927669568829, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_ActionAssets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160709927669568829, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_ActionAssets.Array.data[1]
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 3c1bd2204f9a7614bab0c122ff79548f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+--- !u!1 &1124567102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1124567105}
+  - component: {fileID: 1124567104}
+  - component: {fileID: 1124567103}
+  m_Layer: 0
+  m_Name: AR Session
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1124567103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124567102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa850fbd5b8aded44846f96e35f1a9f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1124567104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124567102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3859a92a05d4f5d418cb6ca605290e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AttemptUpdate: 1
+  m_MatchFrameRate: 1
+  m_TrackingMode: 2
+--- !u!4 &1124567105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124567102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.19659847, y: 1.3105, z: -0.24817938}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1256700351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3619542596533218170, guid: ad8dde9b887f5774d95a09aef04f5f45, type: 3}
@@ -572,15 +640,11 @@ MonoBehaviour:
   - {fileID: 276406586985154960, guid: 8384e01675fe92f49a8ea27c6d969bb0, type: 3}
   - {fileID: 4816523121194869698, guid: c63d5da881a164948ac17290041be5e1, type: 3}
   - {fileID: 3675186315925952247, guid: a1541b38f48678f4bbd1cee5c1706c45, type: 3}
+  casePrefab: {fileID: 5884842053482489764, guid: da689a7dc757b174c883e94e3418d1bc, type: 3}
   spacing: 0.3
   table: {fileID: 749349236}
   qrReader: {fileID: 2130387832}
   qrCodeObject: {fileID: 2130387831}
-  gridRows: 5
-  gridCols: 5
-  cellSize: 0.5
-  gridColor: {r: 0, g: 0, b: 0, a: 1}
-  selectedCellColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!4 &1574875130
 Transform:
   m_ObjectHideFlags: 0
@@ -687,3 +751,4 @@ SceneRoots:
   - {fileID: 1574875130}
   - {fileID: 2130387835}
   - {fileID: 773469839}
+  - {fileID: 1124567105}

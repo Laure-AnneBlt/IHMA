@@ -35,7 +35,7 @@ Notre choix a été de simplifier et d’optimiser l’expérience utilisateur e
     `git clone https://github.com/Laure-AnneBlt/IHMA.git` 
     
 2.  **Ouvrir le projet dans Unity**.
-3.  **Configurer la plateforme cible** (Android ou VR).  
+3.  **Configurer la plateforme cible** (Android, VR ou PC).  
     Consultez les tutoriels spécifiques pour les étapes détaillées :
     -   Guide pour le build sur smartphone  (Android) : https://localjoost.github.io/Running-an-MRTK3-app-on-an-Android-Phone/
     -   Guide pour le build sur casque VR (Hololens) : https://learn.microsoft.com/en-us/windows/mixed-reality/develop/unity/build-and-deploy-to-hololens

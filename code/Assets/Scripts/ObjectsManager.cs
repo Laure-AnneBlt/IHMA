@@ -1,19 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UIElements;
 
-enum BlockColor { NEUTRAL, RED, BLUE, DONE };
+
+public enum BlockColor { NEUTRAL, RED, BLUE, DONE };
+public enum UserRole { Admin, Player }
 
 public class DistributeInLine : MonoBehaviour
 
 {
     public static DistributeInLine Instance { get; private set; }
+
+
 
     public GameObject[] prefabs;
     public GameObject casePrefab;
@@ -21,6 +18,7 @@ public class DistributeInLine : MonoBehaviour
     public Transform table;
     public QRCodeReader qrReader;
     public GameObject qrCodeObject;
+    public UserRole currentRole;
    
 
     private List<GameObject> objects = new List<GameObject>();   // To hold the 12 objects instantiated from the prefab
@@ -30,11 +28,6 @@ public class DistributeInLine : MonoBehaviour
     private int m = 13;
     private GameObject[,] caseObject;
 
-/*    // Smartphone
-    [SerializeField]
-    private InputActionReference tapReference;
-
-*/
 
 
     public static List<GameObject> GetObjects()
@@ -68,13 +61,18 @@ public class DistributeInLine : MonoBehaviour
 
     void Start()
     {
-/*        tapReference.action.performed += ctx => InitialLocationComplete();*/
+
+        #if UNITY_ANDROID
+                currentRole = UserRole.Player; // Le smartphone est un Player.
+        #elif UNITY_STANDALONE
+                currentRole = UserRole.Admin; // Le PC est un Admin.
+        #elif UNITY_XR
+                currentRole = UserRole.Player; // Le casque VR est un Player.
+        #else
+                Debug.Log("Build inconnu.");
+        #endif
+
         caseObject = new GameObject[n, m];
-
-
-
-        /*float CubeLength = 0.05f;*/
-
 
         for (int i = 0; i < n; i++)
         {
@@ -129,26 +127,17 @@ public class DistributeInLine : MonoBehaviour
             }
         }
 
-        DetectAndColorBlock();
-        // DetectAndColorCell(); // Gérer la sélection des cases
+
+        if (currentRole == UserRole.Admin)
+        {
+            DetectAndColorBlock();
+        }
 
         if (qrReader.init)
         {
             qrCodeObject.SetActive(false);
         }
 
-
-        /*for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                //caseObject[i, j].transform.position = new Vector3(i*0.1f , table.position.y + 0.01f, j * 0.1f);
-                Vector3 bottomLeftCorner = table.position - new Vector3(table.localScale.x / 2, 0, table.localScale.z / 2);
-                Vector3 newPos = new Vector3(bottomLeftCorner.x + i * CubeLength, table.position.y + 0.01f, (-table.position.z / 2) + j * CubeLength);
-                caseObject[i, j].transform.position = newPos;
-                    // new Vector3( +i*0.1f, table.position.y + 0.01f, (-table.position.z/2) + j * 0.1f);
-            }
-        }*/
 
         Vector3 bottomLeftCorner = table.position - new Vector3(table.localScale.x / 2, 0, table.localScale.z / 2);
 
@@ -252,24 +241,41 @@ public class DistributeInLine : MonoBehaviour
     }
 }
 
+
+
 public class DragObject : MonoBehaviour
 {
     private Vector3 offset;
     private float zCoord;
     private GameObject rootObject;
+    public UserRole currentRole;
 
 
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Clic gauche
-        {
-            HandleMouseDown();
-        }
 
-        if (Input.GetMouseButton(0) && rootObject != null) // Maintenir clic gauche
+        #if UNITY_ANDROID
+            currentRole = UserRole.Player; // Le smartphone est un Player.
+        #elif UNITY_STANDALONE
+            currentRole = UserRole.Admin; // Le PC est un Admin.
+        #elif UNITY_XR
+            currentRole = UserRole.Player; // Le casque VR est un Player.
+        #else
+            Debug.Log("Build inconnu.");
+        #endif
+
+        if (currentRole == UserRole.Player)
         {
-            HandleMouseDrag();
+            if (Input.GetMouseButtonDown(0)) // Clic gauche
+            {
+                HandleMouseDown();
+            }
+
+            if (Input.GetMouseButton(0) && rootObject != null) // Maintenir clic gauche
+            {
+                HandleMouseDrag();
+            }
         }
     }
 
